@@ -4,7 +4,7 @@ This textboard allows you to make threads, reply to them and delete threads and 
 
 ---
 
-#Functionality by class
+# Functionality by class
 1. Board
 - [x] Create a thread
 - [x] Delete a thread
