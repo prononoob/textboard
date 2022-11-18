@@ -17,8 +17,8 @@ This textboard allows you to make threads, reply to them and delete threads and 
 
 3. Window
 - [x] Create threads from gui using Board.create
-- [x] Show thread catalog (3 positions) using Board.show
+- [x] Show thread catalog (3 positions) using Board
 - [x] Browse between multiple pages of the catalog using Next and Previous buttons
 - [ ] Reply to threads using Thread.reply
-- [ ] Show replies using Thread.showReplies
+- [ ] Show replies using Thread
 - [ ] Delete Replies using Thread.deleteReply
