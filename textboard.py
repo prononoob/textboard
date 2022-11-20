@@ -47,12 +47,15 @@ class Thread:
 		self.replyID += 1
 
 	def showReplies(self, threadID):
+		self.currentReplies = []
 		self.threadID = threadID
 		print('----------')
 		print(self.board.catalog[threadID])
 		for i in self.replies:
 			if self.replies[i] and self.replies[i][0] == self.threadID:
+				self.currentReplies.append(self.replies[i][1])
 				print(f'    Reply {i}: {self.replies[i][1]}')
+		return self.currentReplies
 
 	def deleteReply(self, replyID):
 		self.replyID = replyID
@@ -60,8 +63,9 @@ class Thread:
 
 
 class Window:
-	def __init__(self, board):
+	def __init__(self, board, thread):
 		self.board = board
+		self.thread = thread
 		self.threadOpen = False
 		self.root = Tk()
 		self.root.geometry('400x350')
@@ -177,7 +181,14 @@ class Window:
 
 	def replyScene(self, replyID):
 		self.replyID = replyID
+		self.currentReplies = self.thread.showReplies(self.replyID)
 		print(f'replyID {self.replyID}')
+		self.clearScene()
+		for x in self.currentReplies:
+			Label(self.root, text=x, width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+		self.mainMenuButton = Button(text='Main menu', command=self.mainMenu)
+		self.mainMenuButton.pack(ipadx=10, ipady=10, padx=10, expand=True, side=LEFT)
+
 
 	def getText(self):
 		self.content = self.threadContent.get('1.0', 'end').strip()
@@ -186,17 +197,16 @@ class Window:
 
 
 if __name__ == '__main__':
-	# DODAJ SCENE ODPOWIEDZI
-	
 	board = Board()
-	'''board.create('Thread 1')
+	board.create('Thread 1')
 	board.create('Thread 2')
 	board.create('Thread 3')
-	board.show()'''
+	board.create('Thread 4')
+	#board.show()
 	thread = Thread(board=board)
-	'''thread.reply(0, 'Reply 1')
+	thread.reply(0, 'Reply 1')
 	thread.reply(0, 'Reply 2')
 	thread.showReplies(0)
-	thread.deleteReply(0)
+	'''thread.deleteReply(0)
 	thread.showReplies(0)'''
-	window = Window(board=board)
+	window = Window(board=board, thread=thread)
