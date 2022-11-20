@@ -109,19 +109,38 @@ class Window:
 			self.createButton.destroy()
 			self.threadOpen = False
 
+	def createReplyButtons(self, replyButtonId):
+		self.replyButtonId = replyButtonId
+		if self.firstReply:
+			self.fVal += self.replyButtonId
+			self.sVal = self.fVal+1
+			self.tVal = self.fVal+2
+			self.buttonCounter = 0
+			self.firstReply = not self.firstReply
+		if self.buttonCounter == 0:
+			self.buttonCounter += 1
+			Button(self.root, text=self.board.catalog[self.replyButtonId], command=lambda: self.replyScene(self.fVal), width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+		elif self.buttonCounter == 1:
+			self.buttonCounter += 1
+			Button(self.root, text=self.board.catalog[self.replyButtonId], command=lambda: self.replyScene(self.sVal), width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+		elif self.buttonCounter == 2:
+			self.buttonCounter += 1
+			Button(self.root, text=self.board.catalog[self.replyButtonId], command=lambda: self.replyScene(self.tVal), width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+
 	def displayThreeThreads(self, guiThreadIndex):
 		self.guiThreadIndex = guiThreadIndex
+		self.firstReply = True
+		self.fVal, self.sVal, self.tVal = 0, 0, 0
 		if len(self.board.catalog) <= 3:
 			for i in self.board.catalog:
-				Button(self.root, text=self.board.catalog[i], width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+				self.createReplyButtons(i)
 		elif self.guiThreadIndex > len(self.board.catalog)-3:
 			self.guiThreadIndex = len(self.board.catalog)-3
 			for i in range(self.guiThreadIndex, self.guiThreadIndex+3):
-				Button(self.root, text=self.board.catalog[i], width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
+				self.createReplyButtons(i)
 		else:
 			for i in range(self.guiThreadIndex, self.guiThreadIndex+3):
-				Button(self.root, text=self.board.catalog[i], width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
-
+				self.createReplyButtons(i)
 	def nextScene(self):
 		self.catalogScene(False, self.guiThreadIndex+3)
 
@@ -156,6 +175,9 @@ class Window:
 		else:
 			self.createQuit()
 
+	def replyScene(self, replyID):
+		self.replyID = replyID
+		print(f'replyID {self.replyID}')
 
 	def getText(self):
 		self.content = self.threadContent.get('1.0', 'end').strip()
