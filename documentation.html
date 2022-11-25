@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Textboard with Gui</title>
+	</head>
+	<body>
+		<h1 style="border:2px solid DodgerBlue;">Textboard Documentation</h1>
+		<h2>Classes</h2>
+		<h3 style="border:2px solid Tomato;">Board()</h3>
+		<p>When Board() class in initialized, it creates Board().catalog - an empty dictionary, and an integer idCounter=0<br>Threads are stored as a (threadID:title) pair in catalog</p>
+		<h4 style="background-color:Orange;">.create(title)</h4>
+		<p>Creates a thread using a title that was passed as an argument</p>
+		<h4 style="background-color:Orange;">.show(amount)</h4>
+		<p>Prints a specified amount of threads, if no argument was given or the argument was higher than the number of threads, method prints all threads</p>
+		<h4 style="background-color:Orange;">.delete(threadID)</h4>
+		<p>If threadID exists in Board().catalog, it sets the thread value to False, which prevents .show() method from printing it among other threads</p>
+		<h3 style="border:2px solid Tomato;">Thread(board)</h3>
+		<p>Thread() class is initialized with a board instance, Thread() class sets Thread().board to the passed board instance<br>When initialized, Thread() class creates replyID=0 integer, and replies dictionary<br>Replies are stored in Thread().replies in a specific way: (replyID:[threadID, replyMsg])</p>
+		<h4 style="background-color:Orange;">.reply(threadID, replyMsg)</h4>
+		<p>The method makes a new item in Thread().replies using a unique replyID (which then is incremented by one), threadID and replyMsg (which is the actual reply string)</p>
+		<h4 style="background-color:Orange;">.showReplies(threadID)</h4>
+	</body>
+</html>
