@@ -3,6 +3,8 @@
 This textboard allows you to make threads, reply to them and delete threads and replies
 
 ---
+[DOCUMENTATION](https://rawcdn.githack.com/prononoob/textboard/main/documentation.html)
+---
 
 # Functionality by class
 1. Board
