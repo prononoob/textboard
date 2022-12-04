@@ -6,7 +6,6 @@ class Board:
 	def __init__(self):
 		self.catalog = {}
 		self.idCounter = 0
-		print('Class initialized!')
 
 	def create(self, title):
 		self.title = title
@@ -179,34 +178,49 @@ class Window:
 		else:
 			self.createQuit()
 
-	def replyScene(self, replyID):
-		self.replyID = replyID
-		self.currentReplies = self.thread.showReplies(self.replyID)
-		print(f'replyID {self.replyID}')
+	def createReply(self):
+		self.content = self.replyField.get('1.0', 'end').strip()
+		self.thread.replies[self.thread.replyID] = [self.threadID, self.content]
+		self.thread.replyID += 1
+		self.replyList.insert(END, self.content)
+
+	def replyScene(self, threadID):
+		self.threadID = threadID
+		self.currentReplies = self.thread.showReplies(self.threadID)
 		self.clearScene()
+		self.replyScrollbar = Scrollbar(self.root)
+		self.replyList = Listbox(self.root, listvariable=self.currentReplies, yscrollcommand=self.replyScrollbar.set)
+		self.replyList.pack(ipadx=10, ipady=10, padx=10, pady=10, side=LEFT, fill=Y)
+		self.replyScrollbar.pack(side=RIGHT, fill=Y)
+		self.replyScrollbar.config()
+		self.replyButton = Button(self.root, text='Reply', command=self.createReply)
+		self.replyButton.pack(ipadx=10, ipady=10, padx=10, pady=10)
+		self.replyField = Text(self.root, height=5, width=20)
+		self.replyField.pack(ipadx=10, ipady=10, padx=10, pady=10, expand=True)
 		for x in self.currentReplies:
-			Label(self.root, text=x, width=15).pack(ipadx=10, ipady=10, padx=50, expand=True, fill=X)
-		self.mainMenuButton = Button(text='Main menu', command=self.mainMenu)
-		self.mainMenuButton.pack(ipadx=10, ipady=10, padx=10, expand=True, side=LEFT)
+			self.replyList.insert(END, x)
+		self.mainMenuButton = Button(self.root, text='Main menu', command=self.mainMenu)
+		self.mainMenuButton.pack(ipadx=10, ipady=10, padx=10, pady=10)
 
 
 	def getText(self):
 		self.content = self.threadContent.get('1.0', 'end').strip()
 		self.board.create(self.content)
-		print(self.content, self.board.catalog)
 
 
 if __name__ == '__main__':
 	board = Board()
-	board.create('Thread 1')
-	board.create('Thread 2')
-	board.create('Thread 3')
-	board.create('Thread 4')
+	#board.create('Thread 1')
+	#board.create('Thread 2')
+	#board.create('Thread 3')
+	#board.create('Thread 4')
 	#board.show()
 	thread = Thread(board=board)
-	thread.reply(0, 'Reply 1')
+	'''thread.reply(0, 'Reply 1')
 	thread.reply(0, 'Reply 2')
-	thread.showReplies(0)
+	for x in range(0, 100):
+		thread.reply(0, x)'''
+	#thread.showReplies(0)
 	'''thread.deleteReply(0)
 	thread.showReplies(0)'''
 	window = Window(board=board, thread=thread)
