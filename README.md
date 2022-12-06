@@ -23,4 +23,9 @@ This textboard allows you to make threads, reply to them and delete threads and 
 - [x] Browse between multiple pages of the catalog using Next and Previous buttons
 - [x] Reply to threads using Thread.reply
 - [x] Show replies using Thread
-- [ ] Delete Replies using Thread.deleteReply (possibly in release v1.1)
+
+---
+
+TODO:
+- [ ] Check if thread exists in Thread() class methods
+- [ ] Delete threads and replies using gui
